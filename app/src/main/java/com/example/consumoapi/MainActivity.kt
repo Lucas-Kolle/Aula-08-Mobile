@@ -1,6 +1,7 @@
 package com.example.consumoapi
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -168,17 +169,17 @@ fun CepScreen(modifier: Modifier = Modifier) {
 
                         call.enqueue(object: Callback<List<Endereco>> {
                             override fun onResponse(
-                                call: Call<List<Endereco>?>?,
-                                response: Response<List<Endereco>?>?
+                                call: Call<List<Endereco>>,
+                                response: Response<List<Endereco>>
                             ) {
-                                TODO("Not yet implemented")
+                                Log.i("TESTE", "${response.body()}")
                             }
 
                             override fun onFailure(
-                                call: Call<List<Endereco>?>?,
-                                t: Throwable?
+                                call: Call<List<Endereco>>,
+                                t: Throwable
                             ) {
-                                TODO("Not yet implemented")
+                                Log.i("TESTE", "${t.message}")
                             }
                         })
 
