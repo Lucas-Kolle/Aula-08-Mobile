@@ -37,7 +37,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.consumoapi.model.Endereco
+import com.example.consumoapi.service.RetrofitFactory
 import com.example.consumoapi.ui.theme.ConsumoAPITheme
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +65,10 @@ fun CepScreen(modifier: Modifier = Modifier) {
     var ufState by remember { mutableStateOf("") }
     var cidadeState by remember { mutableStateOf("") }
     var ruaState by remember { mutableStateOf("") }
+
+    var listaEnderecosState by remember {
+        mutableStateOf(listOf(Endereco()))
+    }
 
     Column(
         modifier = modifier.fillMaxWidth()
@@ -149,7 +158,32 @@ fun CepScreen(modifier: Modifier = Modifier) {
                         )
                     )
 
-                    IconButton( onClick = { /* TODO */ } ) {
+                    IconButton( onClick = {
+                        var call = RetrofitFactory().getEnderecoService()
+                            .getEnderecosByUfCidadeRua(
+                                uf = ufState,
+                                cidade = cidadeState,
+                                rua = ruaState
+                            )
+
+                        call.enqueue(object: Callback<List<Endereco>> {
+                            override fun onResponse(
+                                call: Call<List<Endereco>?>?,
+                                response: Response<List<Endereco>?>?
+                            ) {
+                                TODO("Not yet implemented")
+                            }
+
+                            override fun onFailure(
+                                call: Call<List<Endereco>?>?,
+                                t: Throwable?
+                            ) {
+                                TODO("Not yet implemented")
+                            }
+                        })
+
+
+                    } ) {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = ""
